@@ -1,0 +1,48 @@
+#include <iostream>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+
+
+using namespace std;
+using namespace sf;
+
+unsigned frame = 0;
+
+
+int main()
+{
+	RenderWindow okno{VideoMode {800,600,32}, "Crane"};
+	okno.setFramerateLimit(60);
+	okno.setActive(true);
+	okno.setKeyRepeatEnabled(true);
+	Event zdarzenie;
+	
+	
+	
+	while (okno.isOpen())
+	{
+		frame++;
+		okno.clear(Color::White);
+		okno.pollEvent(zdarzenie);
+
+		
+		
+			if ((zdarzenie.type == Event::Closed) || (Keyboard::isKeyPressed(Keyboard::Escape)))
+			{
+				okno.close();
+				break;
+			}
+		
+	
+
+
+			okno.display();
+
+			if (!(frame % 60)) {
+				cout << '.';
+				frame = 0;
+			}
+	}
+
+	return 0;
+}
