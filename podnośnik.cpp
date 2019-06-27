@@ -34,6 +34,21 @@ void Podnośnik::update()
 	}
 
 	else { velocity.x = 0; }
+
+	if (Keyboard::isKeyPressed(Keyboard::Key::Down) && this->dół() < 460)
+	{
+		długość_palety += 2.f;
+		if (długość_palety > 440.f) { długość_palety = 440.f; }
+
+		paleta.setSize({ this->szerokość_palety,this->długość_palety });
+	}
+
+    if (Keyboard::isKeyPressed(Keyboard::Key::Up) && this->góra() > 50)
+	{
+		długość_palety -= 2.f;
+		if (długość_palety < 20.f) { długość_palety = 20.f; }
+		paleta.setSize({ this->szerokość_palety,this->długość_palety });
+	}
 }
 
 float Podnośnik::lewo()
@@ -49,11 +64,11 @@ float Podnośnik::prawo()
 
 float Podnośnik::góra()
 {
-	return this->paleta.getPosition().y - paleta.getSize().y / 2.f;
+	return this->paleta.getPosition().y ;
 }
 
 float Podnośnik::dół()
 {
-	return this->paleta.getPosition().y + paleta.getSize().y / 2.f;
+	return this->paleta.getPosition().y ;
 }
 

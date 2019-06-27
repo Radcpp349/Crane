@@ -1,22 +1,61 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-
+#include "Podnośnik.h"
 
 using namespace std;
 using namespace sf;
 
-unsigned frame = 0;
+
 
 
 int main()
 {
+	unsigned frame = 0;
+	Podnośnik podnośnik(700, 293);
+
 	RenderWindow okno{VideoMode {800,600,32}, "Crane"};
 	okno.setFramerateLimit(60);
 	okno.setActive(true);
 	okno.setKeyRepeatEnabled(true);
 	Event zdarzenie;
 	
+	Texture tekstura1;
+	if (!tekstura1.loadFromFile("wieża.png"))
+	{
+		return 0;
+	}
+
+	Texture tekstura2;
+	if (!tekstura2.loadFromFile("ramie.png"))
+	{
+		return 0;
+	}
+
+
+
+	RectangleShape Podstawa(Vector2f(190,500));
+	
+	Podstawa.setOrigin(40, 250);
+	Podstawa.setPosition(100,344);
+	Podstawa.setTexture(&tekstura1);
+	Podstawa.setTextureRect(sf::IntRect(0, 0, 360, 752));
+
+	RectangleShape Podłoga(Vector2f(800, 6));
+
+	Podłoga.setOrigin(400, 3);
+	Podłoga.setPosition(400, 597);
+	Podłoga.setFillColor(Color(128, 128, 128));
+
+	RectangleShape Ramie(Vector2f(520, 80));
+
+	Ramie.setOrigin(260, 48);
+	Ramie.setPosition(467, 143);
+	Ramie.setTexture(&tekstura2);
+	Ramie.setTextureRect(sf::IntRect(0, 0, 1040, 123));
+
+
+
 	
 	
 	while (okno.isOpen())
@@ -33,15 +72,21 @@ int main()
 				break;
 			}
 		
-	
-
-
-			okno.display();
+		
 
 			if (!(frame % 60)) {
 				cout << '.';
 				frame = 0;
 			}
+
+			podnośnik.update();
+
+			okno.draw(Podstawa);
+			okno.draw(Podłoga);
+			okno.draw(Ramie);
+			okno.draw(podnośnik);
+
+			okno.display();
 	}
 
 	return 0;
